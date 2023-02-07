@@ -9,12 +9,9 @@ const CartContext = createContext();
 const getLocalStorage = () => {
 
     let myData = localStorage.getItem('kaifData')
-    if (myData.length === 0) {
-        return []
-    } else {
-        return JSON.parse(myData)
-
-    }
+    const parseData = JSON.parse(myData)
+    if (!Array.isArray(parseData)) return [];
+    return parseData
 }
 
 const initialState = {
@@ -36,10 +33,10 @@ const CartProvider = ({ children }) => {
     useEffect(() => {
         localStorage.setItem('kaifData', JSON.stringify(state.cart));
         dispatch({
-            type:'GET_CART_TOTAL'
+            type: 'GET_CART_TOTAL'
         });
         dispatch({
-            type:'GET_CART_TOTAL_PRICE'
+            type: 'GET_CART_TOTAL_PRICE'
         });
     }, [state.cart])
 
